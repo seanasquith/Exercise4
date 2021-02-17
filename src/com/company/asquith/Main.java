@@ -14,8 +14,9 @@ public class Main {
         displayResults(cityTemps, cityList); //Displays each city with the five-day average temperature(uses the getAvgTemp method)
     }
 
+    static Scanner input = new Scanner(System.in); //So I don't have to make a new scanner in both methods
+
     static List<String> collectCities() {
-        Scanner input = new Scanner(System.in);
         System.out.println("Please enter a list of cities, type \"END\" when you're finished.");
         List<String> cityList = new ArrayList<>();
         String cityInput = "";
@@ -28,8 +29,7 @@ public class Main {
     }
 
     static List<Double[]> collectTemps(List<String> cityList) {
-        Scanner input = new Scanner(System.in);
-        List<Double[]> tempList = new ArrayList<>();
+        List<Double[]> tempList = new ArrayList<>(); //List with type Double array
         for (String city : cityList) { //Goes through each string in cityList
             System.out.println("Please enter the average temperature in fahrenheit for the next five days for " + city);
             Double[] tempArray = new Double[5]; //Array that stores 5 doubles
@@ -39,6 +39,13 @@ public class Main {
             tempList.add(tempArray); //Adds double array to tempList for each city
         }
         return tempList;
+    }
+
+    static void displayResults(Map<List<String>, List<Double[]>> cityTemps, List<String> cityList) {
+        for (int i = 0; i < cityList.size(); i++) {
+            System.out.print("The five-day average temperature of " + getCity(cityTemps, i) + " is ");
+            System.out.println((getAvgTemp(cityTemps, i)).toString().replace("[", "").replace("]", "") + "° Fahrenheit");
+        }
     }
 
     static String getCity(Map<List<String>, List<Double[]>> cityTemps, int i) {
@@ -61,12 +68,5 @@ public class Main {
             tempList.add(sum / 5);
         }
         return tempList;
-    }
-
-    static void displayResults(Map<List<String>, List<Double[]>> cityTemps, List<String> cityList) {
-        for (int i = 0; i < cityList.size(); i++) {
-            System.out.print("The five-day average temperature of " + getCity(cityTemps, i) + " is ");
-            System.out.println((getAvgTemp(cityTemps, i)).toString().replace("[", "").replace("]", "") + "° Fahrenheit");
-        }
     }
 }
